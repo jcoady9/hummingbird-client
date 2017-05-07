@@ -17,7 +17,8 @@ export default Route.extend(DataErrorMixin, {
 
   afterModel(model) {
     set(this, 'breadcrumb', `Comment by ${get(model, 'user.name')}`);
-    this.setHeadTags(model);
+    const tags = this.setHeadTags(model);
+    set(this, 'headTags', tags);
   },
 
   setupController(controller, model) {
@@ -70,7 +71,7 @@ export default Route.extend(DataErrorMixin, {
         tagId: 'meta-twitter-data1',
         attrs: {
           property: 'twitter:data1',
-          content: `${get(model, 'likesCount')}`
+          content: get(model, 'likesCount')
         }
       });
     }

@@ -18,7 +18,8 @@ export default Route.extend(DataErrorMixin, {
 
   afterModel(model) {
     set(this, 'breadcrumb', `Post by ${get(model, 'user.name')}`);
-    this.setHeadTags(model);
+    const tags = this.setHeadTags(model);
+    set(this, 'headTags', tags);
     get(this, 'metrics').invoke('trackImpression', 'Stream', {
       content_list: [`Post:${get(model, 'id')}`],
       location: get(this, 'routeName')
