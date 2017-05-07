@@ -19,8 +19,6 @@ export default Route.extend(ApplicationRouteMixin, {
     if (get(session, 'isAuthenticated')) {
       return this._getCurrentUser();
     }
-    // boot intercom for guests
-    get(this, 'metrics').invoke('identify', 'Intercom', {});
   },
 
   headTags() {
