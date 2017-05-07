@@ -35,7 +35,7 @@ export default Route.extend(DataErrorMixin, {
   },
 
   setHeadTags(model) {
-    const desc = clip(get(model, 'content'), 400);
+    const desc = clip(get(model, 'content'), 140);
     const data = [{
       type: 'meta',
       tagId: 'meta-description',
