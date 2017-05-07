@@ -117,7 +117,7 @@ export default Route.extend(CanonicalRedirectMixin, CoverPageMixin, {
       tagId: 'meta-og-image',
       attrs: {
         property: 'og:image',
-        content: get(model, 'posterImage.medium')
+        content: get(model, 'posterImage.tiny')
       }
     }];
     if (get(model, 'averageRating')) {
