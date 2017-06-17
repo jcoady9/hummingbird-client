@@ -1,0 +1,23 @@
+<h5>
+  {{#if category}}
+    {{t "recommendations.headers.category-interest" category=category.title}}
+  {{else}}
+    {{t "recommendations.headers.top-media" type=namespace name=session.account.name}}
+  {{/if}}
+</h5>
+
+{{#if getRecommendationsTask.isRunning}}
+  {{! @TODO(Recommendations): Loader }}
+{{else if results}}
+  <div class="media-browse">
+    <div class="media-grid container">
+      <div class="row">
+        {{#each results as |media|}}
+          {{recommendations/media-recommendation media=media tagName=""}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+{{else}}
+  <p>{{t "recommendations.no-data"}}</p>
+{{/if}}

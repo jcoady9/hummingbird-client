@@ -1,0 +1,29 @@
+<div class="recommendations-content col-sm no-padding-left">
+  {{! Top Anime/Manga }}
+  {{recommendations/media-recommendations namespace=mediaType}}
+
+  {{! Category based recommendations }}
+  {{#unless model.userFavoritesTask.isRunning}}
+    {{#if model.userFavoritesTask.value}}
+      {{#each (take 3 (shuffle model.userFavoritesTask.value)) as |favorite|}}
+        {{#with favorite.category as |category|}}
+          {{recommendations/media-recommendations namespace=mediaType category=category}}
+        {{/with}}
+      {{/each}}
+    {{else}} {{! User doesn't have any favorite categories }}
+      <div class="card p-a-1">
+        <h5>Hey There! [Placeholder]</h5>
+        <p>Favoriting categories provides you with improved recommendations!</p>
+        <a href={{href-to "explore" mediaType}} class="button button--primary">
+          Explore {{mediaType}}
+        </a>
+      </div>
+    {{/if}}
+  {{/unless}}
+</div>
+
+<div class="recommendations-sidebar col-sm">
+  {{recommendations/recommendations-sidebar
+    namespace=mediaType
+    categoryTask=model.userFavoritesTask}}
+</div>

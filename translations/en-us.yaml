@@ -32,6 +32,11 @@ titles:
         newly-released: "Newly Released {category} {type}"
         trending: "Trending {category} {type}"
         most-popular: "Most Popular {category} {type}"
+  recommendations:
+    index: "{mediaType, select,
+      anime {Anime}
+      manga {Manga}
+      other {}} Recommendations"
   not-found: "Not Found"
   server-error: "Server Error"
   users:
@@ -71,8 +76,10 @@ titles:
 # header
 header:
   library: "Library"
-  anime: "Anime"
-  manga: "Manga"
+  anime: "Explore Anime"
+  manga: "Explore Manga"
+  anime-recommendations: "Anime Recommendations"
+  manga-recommendations: "Manga Recommendations"
   trending: "Trending"
   groups: "Groups"
   feedback: "Feedback"
@@ -781,6 +788,30 @@ explore:
     removing: "Removing..."
     create: "Add to Favorites"
     creating: "Adding..."
+# page: recommendations
+recommendations:
+  headers:
+    top-media: "Top {type, select,
+      anime {Anime}
+      manga {Manga}
+      other {}} for {name}"
+    category-interest: "Your Interest in {category}"
+  rate: "Rate"
+  want-to-watch: "Want to Watch"
+  not-interested: "Not Interested"
+  edit: "Edit"
+  sidebar:
+    header: "{type, select,
+      anime {Anime}
+      manga {Manga}
+      other {}} Taste Profile"
+    rate-more: "Rate more {type, select,
+      anime {anime}
+      manga {manga}
+      other {}}"
+    category-header: "Recommendations by Category"
+  # This should only happen when the server response fails.
+  no-data: "Looks like there was an issue retrieving your recommendations. We're looking into it!"
 # shared: media
 media-shared:
   types:

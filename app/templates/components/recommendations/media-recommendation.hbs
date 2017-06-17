@@ -1,0 +1,41 @@
+<div class="poster-wrapper {{if isDisabled "is-disabled"}}">
+  {{! Poster }}
+  {{#media-popover media=media}}
+    <div class="grid-poster">
+      {{lazy-image src=(image media.posterImage "medium")}}
+      <div class="poster-overlay">
+        <a href={{href-to (concat media.modelType ".show") media.slug}}></a>
+      </div>
+    </div>
+  {{/media-popover}}
+
+  {{! Actions }}
+  {{#unless isDisabled}}
+    <div class="recommendation-actions">
+      {{#if isInLibrary}}
+        <button class="button button--dark-outline button--small w-100" onclick={{action (toggle "showEditModal" this)}}>
+          {{t "recommendations.edit"}}
+        </button>
+      {{else}}
+        {{#library-entry/rating-button class="button button--secondary button--small rate-button" onClick=(perform createLibraryEntryTask "completed")}}
+          {{t "recommendations.rate"}}
+        {{/library-entry/rating-button}}
+        <button class="button button--primary button--small want-to-watch" disabled={{tasks.isRunning}} onclick={{perform createLibraryEntryTask "planned"}}>
+          {{t "recommendations.want-to-watch"}}
+        </button>
+        <div class="not-interested text-xs-center">
+          <a href="#" {{action "notInterested"}}>{{t "recommendations.not-interested"}}</a>
+        </div>
+      {{/if}}
+    </div>
+  {{/unless}}
+</div>
+
+{{#if showEditModal}}
+  {{to-elsewhere named="modal" send=(component "modals/library-edit"
+    libraryEntry=libraryEntry
+    saveEntry=(perform saveLibraryEntryTask)
+    removeEntry=(perform removeLibraryEntryTask)
+    onClose=(toggle-action "showEditModal" this)
+  )}}
+{{/if}}

@@ -81,6 +81,10 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" href={{href-to "explore.index" "anime"}}>{{t "header.anime"}}</a>
               <a class="dropdown-item" href={{href-to "explore.index" "manga"}}>{{t "header.manga"}}</a>
+              {{#if session.hasUser}}
+                <a class="dropdown-item" href={{href-to "recommendations.index" "anime"}}>{{t "header.anime-recommendations"}}</a>
+                <a class="dropdown-item" href={{href-to "recommendations.index" "manga"}}>{{t "header.manga-recommendations"}}</a>
+              {{/if}}
             </div>
           </li>
           {{! Groups }}

@@ -1,0 +1,77 @@
+.recommendations-content {
+  h5 { margin-bottom: 15px; }
+
+  .media-recommendations {
+    margin-bottom: 30px;
+  }
+
+  .media-browse { margin-bottom: 0; }
+  .media-browse .media-grid .poster-wrapper {
+    width: 25%;
+    &.is-disabled { opacity: 0.3; }
+  }
+
+  .recommendation-actions {
+    margin-top: 10px;
+    .want-to-watch { float: right; }
+    .rate-button {
+      color: $body-text-color;
+      background-color: lighten($secondary-cta-color, 10);
+    }
+    .button {
+      padding: { left: 15px; right: 15px; }
+    }
+    .not-interested {
+      margin-top: 5px;
+      a {
+        font-size: 14px;
+        color: $body-secondary-text-color;
+        &:hover { color: $body-link-color; }
+      }
+    }
+  }
+}
+
+.recommendations-sidebar {
+  max-width: 320px;
+  padding: 0;
+  .card {
+    padding: 20px;
+  }
+  .profile-strength {
+    .strength-header {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .strength-percent {
+      float: right;
+      font-size: 20px;
+      font-weight: bold;
+      color: $body-link-color;
+    }
+  }
+  .rate-media-cta {
+    display: flex;
+    justify-content: center;
+    padding: { top: 15px; bottom: 15px; }
+    margin: { top: 10px; bottom: 10px; left: -20px; right: -20px; }
+    background-color: $divider-color;
+  }
+  .category-recommendations {
+    .category-header {
+      font-weight: bold;
+    }
+    .category-list-item {
+      padding: 10px 0px;
+      border-bottom: 1px solid $divider-color;
+      &:last-child { border-bottom: none; }
+      .media-count { float: right; }
+    }
+  }
+  .recommenations-help {
+    p {
+      color: $body-secondary-text-color;
+      font-size: 14px;
+    }
+  }
+}

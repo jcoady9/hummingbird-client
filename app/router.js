@@ -72,6 +72,10 @@ RouterInstance.map(function() {
     });
   });
 
+  this.route('recommendations', { path: '/recommendations/:media_type' }, function() {
+    this.route('more', { path: '/:slug' });
+  });
+
   this.route('groups', function() {
     this.route('new');
     this.route('group', { path: '/:slug' }, function() {
