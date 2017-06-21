@@ -37,6 +37,10 @@ titles:
       anime {Anime}
       manga {Manga}
       other {}} Recommendations"
+    more: "{category} {mediaType, select,
+      anime {Anime}
+      manga {Manga}
+      other {}} Recommendations"
   not-found: "Not Found"
   server-error: "Server Error"
   users:

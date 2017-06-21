@@ -1,0 +1,12 @@
+<div class="recommendations-content col-sm no-padding-left">
+  {{! Top Anime/Manga }}
+  {{recommendations/media-recommendations
+    namespace=mediaType
+    category=model.category}}
+</div>
+
+<div class="recommendations-sidebar col-sm">
+  {{recommendations/recommendations-sidebar
+    namespace=mediaType
+    categoryTask=model.userFavoritesTask}}
+</div>

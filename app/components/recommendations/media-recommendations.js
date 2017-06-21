@@ -11,9 +11,16 @@ export default Component.extend({
   store: service(),
   queryCache: service(),
 
-  results: computed('getRecommendationsTask.last.value', function() {
-    const limit = get(this, 'category') ? 4 : 8;
-    return (get(this, 'getRecommendationsTask.last.value') || []).slice(0, limit);
+  results: computed('getRecommendationsTask.last.value', 'category', function() {
+    let content = get(this, 'getRecommendationsTask.last.value') || [];
+    if (get(this, 'category') !== undefined) {
+      content = content.find(recommendation => (
+        get(recommendation, 'category.slug') === get(this, 'category.slug')
+      ));
+      content = content ? get(content, 'media') : [];
+    }
+    const limit = get(this, 'limit');
+    return content.slice(0, limit);
   }).readOnly(),
 
   didReceiveAttrs() {
@@ -22,23 +29,34 @@ export default Component.extend({
   },
 
   getRecommendationsTask: task(function* () {
-    const namespace = get(this, 'namespace');
-    let path = `/recommendations/${namespace}`;
     const isCategory = get(this, 'category') !== undefined;
-
-
-    // Switch to a category request if this is category is passed in.
     if (isCategory) {
-      path = `/category_recommendations/${namespace}`;
+      return yield get(this, '_getCategoryRecommendationsTask').perform();
     }
+    return yield get(this, '_getMediaRecommendationsTask').perform();
+  }).drop(),
 
+  _getMediaRecommendationsTask: task(function* () {
+    const namespace = get(this, 'namespace');
+    const path = `/recommendations/${namespace}`;
+    return yield get(this, '_makeRequestTask').perform(path);
+  }).drop(),
+
+  _getCategoryRecommendationsTask: task(function* () {
+    const namespace = get(this, 'namespace');
+    const path = `/category_recommendations/${namespace}`;
+    return yield get(this, '_makeRequestTask').perform(path);
+  }).drop(),
+
+  _makeRequestTask: task(function* (path) {
+    const namespace = get(this, 'namespace');
     // try get a cached entry
     const cachedRecords = yield get(this, 'queryCache').get('recommendations', path);
     if (cachedRecords) {
       return cachedRecords;
     }
 
-    // query the API
+    // query the API & push into cache
     const response = yield get(this, 'ajax').request(path);
     if (typeOf(response.data) !== 'array') {
       return [];
@@ -47,19 +65,9 @@ export default Component.extend({
     response.data.forEach((data) => {
       const normalize = get(this, 'store').normalize(namespace, data);
       const record = get(this, 'store').push(normalize);
-      // Category endpoint returns a `CategoryRecommendation` model. We want the results to only
-      // include the media however.
-      if (isCategory) {
-        const mediaList = record.hasMany('media').value();
-        (mediaList || []).forEach((media) => {
-          records.pushObject(media);
-        });
-      } else {
-        records.pushObject(record);
-      }
+      records.pushObject(record);
     });
 
-    // push into cache
     get(this, 'queryCache').push('recommendations', path, records);
     return records;
   }).drop()

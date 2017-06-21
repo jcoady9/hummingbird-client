@@ -1,13 +1,20 @@
 <div class="recommendations-content col-sm no-padding-left">
   {{! Top Anime/Manga }}
-  {{recommendations/media-recommendations namespace=mediaType}}
+  {{recommendations/media-recommendations
+    namespace=mediaType
+    limit=8
+  }}
 
   {{! Category based recommendations }}
   {{#unless model.userFavoritesTask.isRunning}}
     {{#if model.userFavoritesTask.value}}
       {{#each (take 3 (shuffle model.userFavoritesTask.value)) as |favorite|}}
         {{#with favorite.category as |category|}}
-          {{recommendations/media-recommendations namespace=mediaType category=category}}
+          {{recommendations/media-recommendations
+            namespace=mediaType
+            category=category
+            limit=4
+          }}
         {{/with}}
       {{/each}}
     {{else}} {{! User doesn't have any favorite categories }}
