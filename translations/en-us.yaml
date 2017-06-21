@@ -810,8 +810,11 @@ recommendations:
       manga {manga}
       other {}}"
     category-header: "Recommendations by Category"
+    help: "How to improve your recommendations"
+    help-modal:
+      header: "Improving your recommendations"
   # This should only happen when the server response fails.
-  no-data: "Looks like there was an issue retrieving your recommendations. We're looking into it!"
+  no-data: "Sorry, looks like there was an issue retrieving your recommendations."
 # shared: media
 media-shared:
   types:

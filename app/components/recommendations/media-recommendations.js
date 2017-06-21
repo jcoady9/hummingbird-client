@@ -13,7 +13,7 @@ export default Component.extend({
 
   results: computed('getRecommendationsTask.last.value', function() {
     const limit = get(this, 'category') ? 4 : 8;
-    return get(this, 'getRecommendationsTask.last.value').slice(0, limit);
+    return (get(this, 'getRecommendationsTask.last.value') || []).slice(0, limit);
   }).readOnly(),
 
   didReceiveAttrs() {

@@ -1,0 +1,11 @@
+{{#bootstrap/bs-modal onClose=onClose as |modal|}}
+  {{#modal.header}}
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h5>{{t "recommendations.sidebar.help-modal.header"}}</h5>
+  {{/modal.header}}
+  {{#modal.body}}
+    {{markdown-to-html markdown=(fr-markdown-file "improving-recommendations")}}
+  {{/modal.body}}
+{{/bootstrap/bs-modal}}

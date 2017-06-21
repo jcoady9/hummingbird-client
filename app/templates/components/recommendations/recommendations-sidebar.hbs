@@ -39,6 +39,15 @@
   </div>
 
   <div class="text-xs-center recommenations-help">
-    <p>How to improve your recommendations</p>
+    <p class="d-inline-block" {{action (toggle "showHelpModal" this)}}>
+      {{t "recommendations.sidebar.help"}}
+    </p>
   </div>
 </div>
+
+{{! Help Modal }}
+{{#if showHelpModal}}
+  {{to-elsewhere named="modal" send=(component "recommendations/help-modal"
+    onClose=(toggle-action "showHelpModal" this)
+  )}}
+{{/if}}
