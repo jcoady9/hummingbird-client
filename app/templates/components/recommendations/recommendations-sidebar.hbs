@@ -10,7 +10,7 @@
     </div>
 
     <div class="rate-media-cta">
-      <button class="button button--primary">
+      <button class="button button--primary" onclick={{action (toggle "showRateModal" this)}}>
         {{t "recommendations.sidebar.rate-more" type=namespace}}
       </button>
     </div>
@@ -44,6 +44,13 @@
     </p>
   </div>
 </div>
+
+{{! Rate Modal }}
+{{#if showRateModal}}
+  {{to-elsewhere named="modal" send=(component "recommendations/rate-modal"
+    onClose=(toggle-action "showRateModal" this)
+  )}}
+{{/if}}
 
 {{! Help Modal }}
 {{#if showHelpModal}}
