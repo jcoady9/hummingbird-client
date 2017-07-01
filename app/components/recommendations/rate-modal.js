@@ -1,7 +1,7 @@
 import Component from 'ember-component';
 import get from 'ember-metal/get';
 import service from 'ember-service/inject';
-import computed, { reads } from 'ember-computed';
+import computed from 'ember-computed';
 import { typeOf } from 'ember-utils';
 import { task } from 'ember-concurrency';
 
