@@ -1,11 +1,45 @@
-{{#bootstrap/bs-modal onClose=onClose as |modal|}}
-  {{#modal.header}}
+{{#bootstrap/bs-modal id=modalId onClose=onClose as |modal|}}
+  {{#modal.body}}
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
-    <h5>{{t "recommendations.sidebar.help-modal.header"}}</h5>
-  {{/modal.header}}
-  {{#modal.body}}
-    {{markdown-to-html markdown=(fr-markdown-file "improving-recommendations")}}
+
+    <div class="recommendation-modal-media">
+      {{#if currentMedia}}
+        <div class="media-display">
+          <div class="media-taste">
+            <span class="taste-text">{{t "recommendations.sidebar.rate-modal.taste" type=namespace}}</span>
+            <span class="taste-percent">{{profileStrength}}%</span>
+            <progress class="progress" value={{profileStrength}} max="100"></progress>
+          </div>
+          <div class="media-poster">
+            <img src={{image currentMedia.posterImage "medium"}} alt={{currentMedia.computedTitle}}>
+            <div class="poster-overlay"></div>
+          </div>
+          <div class="media-meta">
+            {{#media-popover media=currentMedia}}
+              <span class="media-title">
+                <a href={{href-to (concat currentMedia.modelType ".show") currentMedia.slug}}>
+                  {{truncate currentMedia.computedTitle 30}}
+                </a>
+              </span>
+              <span class="media-year">{{mediaYear}}</span>
+            {{/media-popover}}
+          </div>
+        </div>
+        <div class="rate-actions">
+          <div class="rate-icons">
+            {{library-entry/simple-rating onClick=(action "rateMedia")}}
+          </div>
+          <div class="next-action">
+            <button class="button button--small button--dark-outline" onclick={{action "nextMedia"}}>
+              {{t "recommendations.sidebar.rate-modal.havent-seen"}}
+            </button>
+          </div>
+        </div>
+      {{else if getRecommendationsTask.isRunning}}
+        {{! @TODO: Loader }}
+      {{/if}}
+    </div>
   {{/modal.body}}
 {{/bootstrap/bs-modal}}

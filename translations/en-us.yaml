@@ -817,6 +817,12 @@ recommendations:
     help: "How to improve your recommendations"
     help-modal:
       header: "Improving your recommendations"
+    rate-modal:
+      taste: "{type, select,
+        anime {Anime}
+        manga {Manga}
+        other {}} Taste Profile"
+      havent-seen: "Haven't Seen"
   # This should only happen when the server response fails.
   no-data: "Sorry, looks like there was an issue retrieving your recommendations."
 # shared: media

@@ -48,6 +48,9 @@
 {{! Rate Modal }}
 {{#if showRateModal}}
   {{to-elsewhere named="modal" send=(component "recommendations/rate-modal"
+    modalId="recommendations-rate-modal"
+    namespace=namespace
+    profileStrength=profileStrength
     onClose=(toggle-action "showRateModal" this)
   )}}
 {{/if}}

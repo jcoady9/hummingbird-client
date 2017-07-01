@@ -17,6 +17,7 @@ export default Route.extend(AuthenticatedRouteMixin, DataErrorMixin, {
     if (!['anime', 'manga'].includes(mediaType)) {
       this.replaceWith('/404');
     }
+    this._super(...arguments);
   },
 
   model() {

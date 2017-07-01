@@ -2,6 +2,7 @@
   z-index: 1000;
 }
 .media-tooltip {
+  z-index: 10000;
   @media (max-width: 768px) {
     display: none;
     visibility: hidden;

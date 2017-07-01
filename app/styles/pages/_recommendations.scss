@@ -75,3 +75,107 @@
     }
   }
 }
+
+#recommendations-rate-modal {
+  .modal-content {
+    background-color: transparent;
+    border: 1px solid $divider-color;
+    border-radius: 15px;
+    color: $divider-color;
+    .close {
+      color: $divider-color;
+      font-size: 36px;
+      opacity: 1;
+    }
+
+    .recommendation-modal-media {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .media-taste {
+        font-size: 12px;
+        font-weight: bold;
+        .taste-text {
+          text-transform: uppercase;
+        }
+        .taste-percent {
+          float: right;
+          color: $rating-star-color;
+        }
+        progress {
+          margin: 0;
+          height: 4px;
+          margin-top: 4px;
+          &::-webkit-progress-value {
+            background-color: $rating-star-color;
+          }
+        }
+      }
+
+      .media-poster {
+        position: relative;
+        img { width: 270px; }
+        .poster-overlay {
+          background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.8) 100%);
+          background-size: auto 300%;
+          top: 0;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .media-meta {
+        position: relative;
+        bottom: 80px;
+        font-weight: bold;
+
+        > div {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .media-title > a {
+          color: $white;
+        }
+      }
+
+      .rate-actions {
+        margin-top: -80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .rate-icons {
+          svg {
+            width: 80px;
+            height: 80px;
+          }
+          .simple-rating-wrapper {
+            &[data-type='awful'], &[data-type='great'] {
+              vertical-align: top;
+              top: -15px;
+            }
+            &[data-type='meh'], &[data-type='good'] {
+              svg {
+                width: 100px;
+                height: 100px;
+              }
+            }
+          }
+        }
+
+        .next-action > button {
+          color: $divider-color;
+          margin-top: 10px;
+          &:hover {
+            color: $body-text-color;
+          }
+        }
+      }
+    }
+  }
+}
