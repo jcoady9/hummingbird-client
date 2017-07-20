@@ -4,16 +4,15 @@ import set from 'ember-metal/set';
 import service from 'ember-service/inject';
 import { reads } from 'ember-computed';
 import { camelize } from 'ember-string';
-import { invokeAction } from 'ember-invoke-action';
+import { invoke, invokeAction } from 'ember-invoke-action';
 import { task } from 'ember-concurrency';
 import { LIBRARY_STATUSES } from 'client/models/library-entry';
 
 export default Component.extend({
-  reactionIndex: 0,
   ajax: service(),
   store: service(),
+  ratings: reads('getIssuesTask.last.value.rating'),
   reactions: reads('getIssuesTask.last.value.reaction'),
-  reactionsCount: reads('reactions.length'),
 
   init() {
     this._super(...arguments);
@@ -22,7 +21,7 @@ export default Component.extend({
 
   didReceiveAttrs() {
     this._super(...arguments);
-    get(this, 'preloadReactionsTask').perform();
+    get(this, 'preloadIssuesTask').perform();
 
     if (!get(this, 'counts')) { return; }
     // Build object of `{ status: count }` as the API only ships down values > 0.
@@ -42,22 +41,28 @@ export default Component.extend({
     return yield get(this, 'ajax').request('/library-entries/_issues');
   }).drop(),
 
-  preloadReactionsTask: task(function* () {
+  preloadIssuesTask: task(function* () {
     yield get(this, 'getIssuesTask').perform();
-    yield get(this, 'nextLibraryEntryTask').perform();
-    set(this, 'reactionLibraryEntry', get(this, 'nextReactionLibraryEntry'));
-    this.incrementProperty('reactionIndex');
-    yield get(this, 'nextLibraryEntryTask').perform();
+    yield this.preloadRatings();
+    yield this.preloadReactions();
   }).drop(),
 
-  nextLibraryEntryTask: task(function* () {
-    const reactionIndex = get(this, 'reactionIndex');
-    const libraryEntryId = get(this, 'reactions').objectAt(reactionIndex);
-    const libraryEntry = yield get(this, 'store').findRecord('library-entry', libraryEntryId, {
-      include: 'anime,manga'
-    });
-    set(this, 'nextReactionLibraryEntry', libraryEntry);
+  getLibraryEntryTask: task(function* (content) {
+    const libraryEntryId = get(this, `${content}.firstObject`);
+    return yield this._getLibraryEntry(libraryEntryId);
   }).drop(),
+
+  preloadRatings() {
+    return this._preloadLibraryEntry('ratings', 'ratingIndex', (libraryEntry) => {
+      set(this, 'nextRatingLibraryEntry', libraryEntry);
+    });
+  },
+
+  preloadReactions() {
+    return this._preloadLibraryEntry('reactions', 'reactionIndex', (libraryEntry) => {
+      set(this, 'nextReactionLibraryEntry', libraryEntry);
+    });
+  },
 
   actions: {
     resetLibrary(...args) {
@@ -67,13 +72,56 @@ export default Component.extend({
       });
     },
 
-    loadNextReaction(isSkip = false) {
+    openRatingModal() {
+      if (!get(this, 'ratingLibraryEntry')) {
+        set(this, 'ratingLibraryEntry', get(this, 'nextRatingLibraryEntry'));
+      }
+      this.preloadRatings();
+      set(this, 'showRatingModal', true);
+    },
+
+    skipRating() {
+      if (get(this, 'ratings.length') === 1) {
+        set(this, 'showRatingModal', false);
+      } else {
+        set(this, 'ratingLibraryEntry', get(this, 'nextRatingLibraryEntry'));
+        this.preloadRatings();
+      }
+    },
+
+    onRating(libraryEntry, rating) {
+      this.decrementProperty('ratingsCount');
+      set(libraryEntry, 'rating', rating);
+      libraryEntry.save();
+      invoke(this, 'skipRating');
+    },
+
+    openReactionModal() {
+      if (!get(this, 'reactionLibraryEntry')) {
+        set(this, 'reactionLibraryEntry', get(this, 'nextReactionLibraryEntry'));
+      }
+      this.preloadReactions();
+      set(this, 'showReactionModal', true);
+    },
+
+    onReaction(isSkip = false) {
       if (!isSkip) {
         this.decrementProperty('reactionsCount');
       }
-      this.incrementProperty('reactionIndex');
       set(this, 'reactionLibraryEntry', get(this, 'nextReactionLibraryEntry'));
-      get(this, 'nextLibraryEntryTask').perform();
+      this.preloadReactions();
     }
+  },
+
+  _getLibraryEntry(libraryEntryId) {
+    return get(this, 'store').findRecord('library-entry', libraryEntryId, {
+      include: 'anime,manga'
+    });
+  },
+
+  _preloadLibraryEntry(content, index, func) {
+    return get(this, 'getLibraryEntryTask').perform(content, index).then((libraryEntry) => {
+      func(libraryEntry);
+    }).catch(() => {});
   }
 });

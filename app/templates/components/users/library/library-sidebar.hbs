@@ -107,8 +107,14 @@
         </div>
       {{else}}
         <div class="library-issues--action">
-          <span>{{t "users.library.sidebar.issues.reactions" count=reactionsCount htmlSafe=true}}</span>
-          <button class="button button--primary button--small" disabled={{preloadReactionsTask.isRunning}} onclick={{action (toggle "showReactionModal" this)}}>
+          <span>{{t "users.library.sidebar.issues.ratings" count=ratings.length htmlSafe=true}}</span>
+          <button class="button button--primary button--small" disabled={{preloadIssuesTask.isRunning}} onclick={{action "openRatingModal"}}>
+            {{t "users.library.sidebar.issues.fix"}}
+          </button>
+        </div>
+        <div class="library-issues--action">
+          <span>{{t "users.library.sidebar.issues.reactions" count=reactions.length htmlSafe=true}}</span>
+          <button class="button button--primary button--small" disabled={{preloadIssuesTask.isRunning}} onclick={{action "openReactionModal"}}>
             {{t "users.library.sidebar.issues.fix"}}
           </button>
         </div>
@@ -117,16 +123,27 @@
   {{/if}}
 </div>
 
+{{#if showRatingModal}}
+  {{to-elsewhere named="modal" send=(component "modals/media-rating"
+    modalId="reaction-modal"
+    media=ratingLibraryEntry.media
+    libraryEntry=ratingLibraryEntry
+    onSkip=(action "skipRating")
+    onRating=(action "onRating" ratingLibraryEntry)
+    onClose=(toggle-action "showRatingModal" this)
+  )}}
+{{/if}}
+
 {{#if showReactionModal}}
   {{to-elsewhere named="modal" send=(component "modals/media-reaction"
+    modalId="reaction-modal"
     media=reactionLibraryEntry.media
     libraryEntry=reactionLibraryEntry
-    modalId="reaction-modal"
     doNotClose=true
     showSkipButton=true
     createOnly=true
-    onSkip=(action "loadNextReaction" true)
-    onCreate=(action "loadNextReaction" false)
+    onSkip=(action "onReaction" true)
+    onCreate=(action "onReaction" false)
     onClose=(toggle-action "showReactionModal" this)
   )}}
 {{/if}}

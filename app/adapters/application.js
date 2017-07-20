@@ -7,5 +7,5 @@ export default JSONAPIAdapter.extend(DataAdapaterMixin, {
   authorizer: 'authorizer:application',
   host: getter(() => config.kitsu.APIHost),
   namespace: 'api/edge',
-  coalesceFindRequests: true
+  coalesceFindRequests: false
 });

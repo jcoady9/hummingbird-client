@@ -481,6 +481,7 @@ users:
       issues:
         header: "Library Issues"
         reactions: "{count} completed media missing <b>reactions</b>"
+        ratings: "{count} completed media missing <b>ratings</b>"
         fix: "fix"
     list:
       edit: "Edit"
