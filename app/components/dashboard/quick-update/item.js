@@ -46,7 +46,7 @@ export default Component.extend({
     if (unit) {
       const title = get(this, 'entry.unit.canonicalTitle');
       if (title) {
-        return `${text} - ${title}`;
+        return `${text} · ${title}`;
       }
     }
     return text;
