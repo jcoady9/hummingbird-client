@@ -3224,11 +3224,12 @@ ember-getowner-polyfill@^2.0.0, ember-getowner-polyfill@^2.0.1:
     ember-cli-version-checker "^1.2.0"
     ember-factory-for-polyfill "^1.1.0"
 
-ember-href-to@1.13.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-1.13.0.tgz#308ab4803d9d08e30a92af888cc67412a800468d"
+ember-href-to@1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-1.15.1.tgz#1ba20ec201245c7cae7e2aa3eec50eb2aa25b729"
   dependencies:
-    ember-cli-babel "^5.1.6"
+    ember-cli-babel "^6.8.2"
+    ember-router-service-polyfill "^1.0.2"
 
 ember-inflector@^2.0.0:
   version "2.0.1"
@@ -3313,13 +3314,13 @@ ember-intl@^2.31.1:
     silent-error "^1.1.0"
     walk-sync "^0.3.2"
 
-ember-invoke-action@1.4.0, ember-invoke-action@^1.4.0:
+ember-invoke-action@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/ember-invoke-action/-/ember-invoke-action-1.4.0.tgz#2899854bd755f9331ca86c902bf6d4dbf8bdfcb3"
   dependencies:
     ember-cli-babel "^5.1.6"
 
-ember-invoke-action@^1.5.0:
+ember-invoke-action@^1.4.0, ember-invoke-action@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/ember-invoke-action/-/ember-invoke-action-1.5.0.tgz#0370f187f39f22d54ddd039cd01aa7e685edbbec"
   dependencies:
@@ -3513,6 +3514,12 @@ ember-router-scroll@^0.4.0:
     ember-app-scheduler "^0.2.0"
     ember-cli-babel "^6.6.0"
     ember-getowner-polyfill "^2.0.1"
+
+ember-router-service-polyfill@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-router-service-polyfill/-/ember-router-service-polyfill-1.0.2.tgz#6e5565f196fa7045cbe06a6fab861f9e766fe62a"
+  dependencies:
+    ember-cli-babel "^6.8.2"
 
 ember-runtime-enumerable-includes-polyfill@^2.0.0:
   version "2.0.0"
@@ -5977,15 +5984,9 @@ mktemp@~0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/mktemp/-/mktemp-0.4.0.tgz#6d0515611c8a8c84e484aa2000129b98e981ff0b"
 
-moment-timezone@0.5.14:
+moment-timezone@0.5.14, moment-timezone@^0.5.13:
   version "0.5.14"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.14.tgz#4eb38ff9538b80108ba467a458f3ed4268ccfcb1"
-  dependencies:
-    moment ">= 2.9.0"
-
-moment-timezone@^0.5.13:
-  version "0.5.13"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.13.tgz#99ce5c7d827262eb0f1f702044177f60745d7b90"
   dependencies:
     moment ">= 2.9.0"
 
